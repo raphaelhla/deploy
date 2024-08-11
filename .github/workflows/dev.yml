@@ -56,7 +56,7 @@ jobs:
                 echo "Imagem accbank-api:dev não encontrada, nada a remover."
               fi
 
-      - name: Copiando imagem nova para EC2
+      - name: Copiando imagem e docker-compose para EC2
         uses: appleboy/scp-action@master
         with:
           host: ec2-44-206-245-4.compute-1.amazonaws.com
@@ -76,5 +76,14 @@ jobs:
           script: |
               docker load < accbank-api.tar.gz 
                 
+      - name: Deploy no ambiente de desenvolvimento
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ec2-44-206-245-4.compute-1.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.AWS_KEY_PAIR }}
+          port: 22
+          script: |
+              nohup docker compose up > output.log 2>&1 &
 
         
