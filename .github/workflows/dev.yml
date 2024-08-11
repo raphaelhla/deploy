@@ -37,5 +37,15 @@ jobs:
                 source: "./target/accbank-api.tar.gz"
                 target: "/home/ubuntu"
 
+            - name: Removendo imagem docker antiga
+              uses: appleboy/ssh-action@v0.1.7
+              with:
+                host: ec2-44-206-245-4.compute-1.amazonaws.com
+                hostname: ubuntu
+                secret: ${{ secrets.AWS_KEY_PAIR }}
+                ports: 22
+                script: |
+                    rm -rf /home/ubuntu/target           
+
             
  
