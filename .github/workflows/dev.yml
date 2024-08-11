@@ -63,7 +63,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
-          source: "accbank-api.tar.gz"
+          source: "accbank-api.tar.gz, docker-compose.yaml"
           target: "/home/ubuntu"
 
       - name: Carregando a nova imagem no docker
