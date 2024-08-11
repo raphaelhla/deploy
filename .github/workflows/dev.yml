@@ -31,9 +31,9 @@ jobs:
               uses: appleboy/scp-action@master
               with:
                 host: ec2-44-206-245-4.compute-1.amazonaws.com
-                hostname: ubuntu
-                secret: ${{ secrets.AWS_KEY_PAIR }}
-                ports: 22
+                username: ubuntu
+                key: ${{ secrets.AWS_KEY_PAIR }}
+                port: 22
                 source: "./target/accbank-api.tar.gz"
                 target: "/home/ubuntu"
 
