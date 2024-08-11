@@ -84,6 +84,6 @@ jobs:
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
           script: |
-              nohup docker compose up > output.log 2>&1 &
+              nohup docker-compose up > output.log 2>&1 &
 
         
