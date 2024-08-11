@@ -30,7 +30,7 @@ jobs:
       - name: Parando a versao anterior da API
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ec2-44-206-245-4.compute-1.amazonaws.com
+          host: ec2-100-26-107-150.compute-1.amazonaws.com
           username: ubuntu
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
@@ -44,7 +44,7 @@ jobs:
       - name: Removendo a imagem docker antiga
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ec2-44-206-245-4.compute-1.amazonaws.com
+          host: ec2-100-26-107-150.compute-1.amazonaws.com
           username: ubuntu
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
@@ -59,7 +59,7 @@ jobs:
       - name: Copiando imagem e docker-compose para EC2
         uses: appleboy/scp-action@master
         with:
-          host: ec2-44-206-245-4.compute-1.amazonaws.com
+          host: ec2-100-26-107-150.compute-1.amazonaws.com
           username: ubuntu
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
@@ -69,7 +69,7 @@ jobs:
       - name: Carregando a nova imagem no docker
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ec2-44-206-245-4.compute-1.amazonaws.com
+          host: ec2-100-26-107-150.compute-1.amazonaws.com
           username: ubuntu
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
@@ -79,7 +79,7 @@ jobs:
       - name: Deploy no ambiente de desenvolvimento
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ec2-44-206-245-4.compute-1.amazonaws.com
+          host: ec2-100-26-107-150.compute-1.amazonaws.com
           username: ubuntu
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
