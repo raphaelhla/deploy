@@ -25,7 +25,7 @@ jobs:
         run: docker build -t accbank-api:dev .
 
       - name: Gerando .tar.gz da imagem
-        run: docker save accbank-api:dev | gzip > target/accbank-api.tar.gz
+        run: docker save accbank-api:dev | gzip > accbank-api.tar.gz
         
       - name: Parando a versao anterior da API
         uses: appleboy/ssh-action@v1.0.3
@@ -40,6 +40,16 @@ jobs:
               else
                 echo "A API não está em execução, nenhum serviço foi interrompido."
               fi
+      
+      - name: Removendo a imagem docker antiga
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ec2-44-206-245-4.compute-1.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.AWS_KEY_PAIR }}
+          port: 22
+          script: |
+              docker rmi accbank-api:dev
 
       - name: Copiando imagem nova para EC2
         uses: appleboy/scp-action@master
@@ -48,7 +58,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
-          source: "target/accbank-api.tar.gz"
+          source: "accbank-api.tar.gz docker-compose.yaml"
           target: "/home/ubuntu"
 
       - name: Carregando a nova imagem no docker
@@ -59,7 +69,7 @@ jobs:
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
           script: |
-              docker load < target/accbank-api.tar.gz 
+              docker load < accbank-api.tar.gz 
                 
 
         
