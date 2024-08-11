@@ -22,16 +22,16 @@ jobs:
         run: mvn clean install && ls
 
       - name: Build da imagem Docker
-        run: docker build -t accbank-api:dev .
+        run: docker build -t accbank-api .
 
       - name: Gerando .tar.gz da imagem
-        run: docker save accbank-api:dev | gzip > accbank-api.tar.gz && ls
+        run: docker save accbank-api | gzip > accbank-api.tar.gz && ls
         
       - name: Parando a versao anterior da API
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ec2-100-26-107-150.compute-1.amazonaws.com
-          username: ubuntu
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
           script: |
@@ -44,23 +44,23 @@ jobs:
       - name: Removendo a imagem docker antiga
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ec2-100-26-107-150.compute-1.amazonaws.com
-          username: ubuntu
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
           script: |
-              if docker image inspect accbank-api:dev > /dev/null 2>&1; then
-                echo "Imagem accbank-api:dev encontrada, removendo..."
-                docker rmi accbank-api:dev
+              if docker image inspect accbank-api > /dev/null 2>&1; then
+                echo "Imagem accbank-api encontrada, removendo..."
+                docker rmi accbank-api
               else
-                echo "Imagem accbank-api:dev não encontrada, nada a remover."
+                echo "Imagem accbank-api não encontrada, nada a remover."
               fi
 
       - name: Copiando imagem e docker-compose para EC2
         uses: appleboy/scp-action@master
         with:
-          host: ec2-100-26-107-150.compute-1.amazonaws.com
-          username: ubuntu
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
           source: "accbank-api.tar.gz, docker-compose.yaml"
@@ -69,8 +69,8 @@ jobs:
       - name: Carregando a nova imagem no docker
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ec2-100-26-107-150.compute-1.amazonaws.com
-          username: ubuntu
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
           script: |
@@ -79,11 +79,9 @@ jobs:
       - name: Deploy no ambiente de desenvolvimento
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ec2-100-26-107-150.compute-1.amazonaws.com
-          username: ubuntu
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
           script: |
-              nohup docker-compose up > output.log 2>&1 &
-
-        
+              nohup docker-compose up > /dev/null 2>&1 &
