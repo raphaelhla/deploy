@@ -1,6 +1,6 @@
 services:
   accbank-api:
-    image: accbank-api
+    image: accbank-api:dev
     environment:
       spring.profiles.active: docker
     ports:
