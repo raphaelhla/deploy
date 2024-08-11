@@ -18,8 +18,8 @@ jobs:
           distribution: "zulu"
           java-version: "17"
       
-      - name: Fazendo build do projeto
-        run: mvn clean install && ls
+      # - name: Fazendo build do projeto
+      #   run: mvn clean install && ls
 
       - name: Build da imagem Docker
         run: docker build -t accbank-api:dev .
