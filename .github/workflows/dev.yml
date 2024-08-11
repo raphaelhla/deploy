@@ -49,7 +49,12 @@ jobs:
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
           script: |
-              docker rmi accbank-api:dev
+              if docker image inspect accbank-api:dev > /dev/null 2>&1; then
+                echo "Imagem accbank-api:dev encontrada, removendo..."
+                docker rmi accbank-api:dev
+              else
+                echo "Imagem accbank-api:dev não encontrada, nada a remover."
+              fi
 
       - name: Copiando imagem nova para EC2
         uses: appleboy/scp-action@master
