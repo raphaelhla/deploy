@@ -25,7 +25,7 @@ jobs:
         run: docker build -t accbank-api:dev .
 
       - name: Gerando .tar.gz da imagem
-        run: docker save accbank-api:dev | gzip > accbank-api.tar.gz
+        run: docker save accbank-api:dev | gzip > accbank-api.tar.gz && ls
         
       - name: Parando a versao anterior da API
         uses: appleboy/ssh-action@v1.0.3
@@ -63,7 +63,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_KEY_PAIR }}
           port: 22
-          source: "accbank-api.tar.gz docker-compose.yaml"
+          source: "accbank-api.tar.gz"
           target: "/home/ubuntu"
 
       - name: Carregando a nova imagem no docker
