@@ -19,6 +19,7 @@ public class CorsWebConfig implements Filter,WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
+		.allowedOrigins("http://localhost:3000", "https://api.raphaelagra.com.br") // Adicione as origens permitidas aqui
     }
 
     @Override
