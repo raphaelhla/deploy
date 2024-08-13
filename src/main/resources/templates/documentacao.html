@@ -6,68 +6,141 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            display: flex;
         }
-        h1 {
-            color: #007bff;
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            padding-top: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            color: #fff;
         }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
         h2 {
-            color: #0056b3;
+            color: #333;
         }
-        pre {
+		
+		pre {
             background-color: #f8f9fa;
-            padding: 15px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
         code {
-            font-family: monospace;
-            background-color: #f1f1f1;
+            background-color: #f4f4f4;
             padding: 2px 4px;
-            border-radius: 3px;
+            border-radius: 4px;
         }
-		.no-expandable {
-		    margin-bottom: 20px;
-		}
-		
-        .expandable {
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            background-color: #f7f7f7;
-        }
-        .expandable h2 {
+
+        .collapsible {
             cursor: pointer;
-            margin: 0;
             padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 18px;
+            background-color: #f1f1f1;
+            margin-bottom: 10px;
         }
-        .expandable-content {
+
+        .content.collapsible-content {
+            padding: 0 18px;
             display: none;
-            margin-top: 10px;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            border-left: 2px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .content.collapsible-content h3 {
+            margin-top: 0;
         }
     </style>
 </head>
 <body>
-    <h1>API Documentation - Acc Bank API</h1>
-    <p>Bem-vindo à documentação da API AccBank. Abaixo estão listados os endpoints disponíveis.</p>
 
-	<div class="no-expandable">
-		<h2>URL Base</h2>
-		<p>As requisições são feitas em uma URL base sob protocolo HTTPS.</p>
-		<p><strong>URL:</strong> <code>https://api.accbankbrasil.com.br/</code></p>
-	</div>
-	
-    <div class="expandable">
-        <h2 onclick="toggleExpandableContent()">Endpoints - Agência</h2>
-        <div id="expandable-content" class="expandable-content">
-            <h3>Listar Agências</h3>
-            <p><strong>Endpoint:</strong> <code>GET /agencias</code></p>
-            <p><strong>Descrição:</strong> Retorna uma lista de todas as agências cadastradas.</p>
-            <pre>
+    <div class="sidebar">
+        <a href="#agencia">Agência</a>
+        <ul>
+            <li><a href="#listar-agencias">Listar Agências</a></li>
+            <li><a href="#buscar-agencia">Buscar Agência por ID</a></li>
+            <li><a href="#atualizar-agencia">Atualizar Agência</a></li>
+            <li><a href="#adicionar-agencia">Adicionar Agência</a></li>
+            <li><a href="#remover-agencia">Remover Agência</a></li>
+        </ul>
+        <a href="#cliente">Cliente</a>
+        <ul>
+            <li><a href="#listar-clientes">Listar Clientes</a></li>
+            <li><a href="#buscar-cliente">Buscar Cliente por ID</a></li>
+            <li><a href="#atualizar-cliente">Atualizar Cliente</a></li>
+            <li><a href="#adicionar-cliente">Adicionar Cliente</a></li>
+            <li><a href="#remover-cliente">Remover Cliente</a></li>
+        </ul>
+        <a href="#conta-corrente">Conta Corrente</a>
+        <ul>
+            <li><a href="#buscar-conta">Buscar Conta Corrente por ID</a></li>
+            <li><a href="#listar-contas">Listar Contas Correntes</a></li>
+            <li><a href="#sacar">Sacar</a></li>
+            <li><a href="#depositar">Depositar</a></li>
+            <li><a href="#transferir">Transferir</a></li>
+        </ul>
+        <a href="#transacao">Transação</a>
+        <ul>
+            <li><a href="#extrato">Extrato Geral</a></li>
+            <li><a href="#extrato-mensal">Extrato Mensal</a></li>
+            <li><a href="#extrato-anual">Extrato Anual</a></li>
+            <li><a href="#extrato-filtrado">Extrato Filtrado</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+
+        <h1>Acc Bank API</h1>
+
+        <h2>URL Base</h2>
+        <p>As requisições são feitas em uma URL base sob protocolo HTTPS.</p>
+        <p><strong>URL:</strong> <code>https://api.accbankbrasil.com.br/</code></p>
+        
+        <h2>Content-Type</h2>
+        <p>O retorno de dados da API será via <code>JSON</code>.</p>
+        <p><strong>Content-Type:</strong> <code>application/json</code></p>
+		
+		<h2>Swagger</h2>
+		<p>A API possui uma interface Swagger, onde é possível explorar todos os endpoints disponíveis e testar as requisições diretamente.</p>
+		<p>O Swagger pode ser acessado pelo seguinte link:</p>
+		<p><code><a href="https://api.accbankbrasil.com.br/swagger-ui/index.html#/" target="_blank">https://api.accbankbrasil.com.br/swagger-ui/index.html#/</a></code></p>
+
+		    <div class="expandable">
+		        <h2 onclick="toggleExpandableContent()">Endpoints - Agência</h2>
+		        <div id="expandable-content" class="expandable-content">
+		            <h3><code>GET /agencias</code></h3>
+		            <p><strong>Descrição:</strong> Retorna uma lista de todas as agências cadastradas.</p>
+		            <pre>
 Exemplo de resposta:
 [
     {
@@ -81,61 +154,130 @@ Exemplo de resposta:
         "endereco": "Avenida Norte, 456"
     }
 ]
-            </pre>
+		            </pre>
 
-            <h3>Buscar Agência por ID</h3>
-            <p><strong>Endpoint:</strong> <code>GET /agencias/{id}</code></p>
-            <p><strong>Descrição:</strong> Retorna os detalhes de uma agência específica com base no ID fornecido.</p>
-            <pre>
+		            <h3>Buscar Agência por ID</h3>
+		            <p><strong>Endpoint:</strong> <code>GET /agencias/{id}</code></p>
+		            <p><strong>Descrição:</strong> Retorna os detalhes de uma agência específica com base no ID fornecido.</p>
+		            <pre>
 Exemplo de resposta:
 {
     "id": 1,
     "nome": "Agência Central",
     "endereco": "Rua Principal, 123"
 }
-            </pre>
+		            </pre>
 
-            <h3>Atualizar Agência</h3>
-            <p><strong>Endpoint:</strong> <code>PUT /agencias/{id}</code></p>
-            <p><strong>Descrição:</strong> Atualiza as informações de uma agência existente com base no ID fornecido.</p>
-            <pre>
+		            <h3>Atualizar Agência</h3>
+		            <p><strong>Endpoint:</strong> <code>PUT /agencias/{id}</code></p>
+		            <p><strong>Descrição:</strong> Atualiza as informações de uma agência existente com base no ID fornecido.</p>
+		            <pre>
 Exemplo de corpo da requisição:
 {
     "nome": "Agência Central Atualizada",
     "endereco": "Rua Nova, 456"
 }
-            </pre>
+		            </pre>
 
-            <h3>Adicionar Nova Agência</h3>
-            <p><strong>Endpoint:</strong> <code>POST /agencias</code></p>
-            <p><strong>Descrição:</strong> Adiciona uma nova agência ao sistema.</p>
-            <pre>
+		            <h3>Adicionar Nova Agência</h3>
+		            <p><strong>Endpoint:</strong> <code>POST /agencias</code></p>
+		            <p><strong>Descrição:</strong> Adiciona uma nova agência ao sistema.</p>
+		            <pre>
 Exemplo de corpo da requisição:
 {
     "nome": "Agência Sul",
     "endereco": "Avenida Sul, 789"
 }
-            </pre>
+		            </pre>
 
-            <h3>Remover Agência</h3>
-            <p><strong>Endpoint:</strong> <code>DELETE /agencias/{id}</code></p>
-            <p><strong>Descrição:</strong> Remove uma agência existente com base no ID fornecido.</p>
+		            <h3>Remover Agência</h3>
+		            <p><strong>Endpoint:</strong> <code>DELETE /agencias/{id}</code></p>
+		            <p><strong>Descrição:</strong> Remove uma agência existente com base no ID fornecido.</p>
+		        </div>
+		    </div>
+
+        <h2 id="cliente">Endpoints de Cliente</h2>
+        <button class="collapsible">Cliente</button>
+        <div class="content collapsible-content">
+            <h3 id="listar-clientes">Listar Clientes</h3>
+            <p><strong>Endpoint:</strong> <code>GET /clientes</code></p>
+            <p>Retorna uma lista de todos os clientes.</p>
+
+            <h3 id="buscar-cliente">Buscar Cliente por ID</h3>
+            <p><strong>Endpoint:</strong> <code>GET /clientes/{id}</code></p>
+            <p>Retorna os dados de um cliente específico com base no ID.</p>
+
+            <h3 id="atualizar-cliente">Atualizar Cliente</h3>
+            <p><strong>Endpoint:</strong> <code>PUT /clientes/{id}</code></p>
+            <p>Atualiza os dados de um cliente específico.</p>
+
+            <h3 id="adicionar-cliente">Adicionar Cliente</h3>
+            <p><strong>Endpoint:</strong> <code>POST /clientes</code></p>
+            <p>Adiciona um novo cliente.</p>
+
+            <h3 id="remover-cliente">Remover Cliente</h3>
+            <p><strong>Endpoint:</strong> <code>DELETE /clientes/{id}</code></p>
+            <p>Remove um cliente com base no ID.</p>
+        </div>
+
+        <h2 id="conta-corrente">Endpoints de Conta Corrente</h2>
+        <button class="collapsible">Conta Corrente</button>
+        <div class="content collapsible-content">
+            <h3 id="buscar-conta">Buscar Conta Corrente por ID</h3>
+            <p><strong>Endpoint:</strong> <code>GET /contas-correntes/{id}</code></p>
+            <p>Retorna os dados de uma conta corrente específica com base no ID.</p>
+
+            <h3 id="listar-contas">Listar Contas Correntes</h3>
+            <p><strong>Endpoint:</strong> <code>GET /contas-correntes</code></p>
+            <p>Retorna uma lista de todas as contas correntes.</p>
+
+            <h3 id="sacar">Sacar</h3>
+            <p><strong>Endpoint:</strong> <code>POST /contas-correntes/{id}/sacar</code></p>
+            <p>Realiza um saque em uma conta corrente específica.</p>
+
+            <h3 id="depositar">Depositar</h3>
+            <p><strong>Endpoint:</strong> <code>POST /contas-correntes/{id}/depositar</code></p>
+            <p>Realiza um depósito em uma conta corrente específica.</p>
+
+            <h3 id="transferir">Transferir</h3>
+            <p><strong>Endpoint:</strong> <code>POST /contas-correntes/{idOrigem}/transferir</code></p>
+            <p>Realiza uma transferência entre contas correntes.</p>
+        </div>
+
+        <h2 id="transacao">Endpoints de Transação</h2>
+        <button class="collapsible">Transação</button>
+        <div class="content collapsible-content">
+            <h3 id="extrato">Extrato Geral</h3>
+            <p><strong>Endpoint:</strong> <code>GET /contas-correntes/{idConta}/extrato</code></p>
+            <p>Retorna o extrato geral de uma conta corrente específica.</p>
+
+            <h3 id="extrato-mensal">Extrato Mensal</h3>
+            <p><strong>Endpoint:</strong> <code>GET /contas-correntes/{idConta}/extrato-mensal?mesAno=MM/yyyy</code></p>
+            <p>Retorna o extrato mensal de uma conta corrente específica.</p>
+
+            <h3 id="extrato-anual">Extrato Anual</h3>
+            <p><strong>Endpoint:</strong> <code>GET /contas-correntes/{idConta}/extrato-anual?ano=yyyy</code></p>
+            <p>Retorna o extrato anual de uma conta corrente específica.</p>
+
+            <h3 id="extrato-filtrado">Extrato Filtrado</h3>
+            <p><strong>Endpoint:</strong> <code>GET /contas-correntes/{idConta}/extrato-filtrado?dataInicio=dd/MM/yyyy HH:mm&dataFim=dd/MM/yyyy HH:mm</code></p>
+            <p>Retorna o extrato filtrado por período de uma conta corrente específica.</p>
         </div>
     </div>
 
-    <footer>
-        <p>AccBank API - Documentação de Endpoints</p>
-    </footer>
-
     <script>
-        function toggleExpandableContent() {
-            const content = document.getElementById('expandable-content');
-            if (content.style.display === 'none' || content.style.display === '') {
-                content.style.display = 'block';
-            } else {
-                content.style.display = 'none';
-            }
-        }
+        document.querySelectorAll('.collapsible').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+        });
     </script>
+
 </body>
 </html>
