@@ -50,6 +50,7 @@ public class Transacao {
 
     private String descricao;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "conta_corrente_id", nullable = false)
     private ContaCorrente contaCorrente;

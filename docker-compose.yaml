@@ -43,4 +43,3 @@ services:
 networks:
   orion-connect:
     driver: bridge
-
