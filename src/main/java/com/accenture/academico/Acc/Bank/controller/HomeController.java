@@ -5,11 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class DocumentacaoController {
+public class HomeController {
 
 	@GetMapping("/")
-    public String documentacao(Model model) {
-        // Adicione quaisquer dados ao modelo se necessário
-        return "documentacao";
+    public String home(Model model) {
+        return "home";
     }
 }
